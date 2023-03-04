@@ -5,22 +5,35 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField]
-    private float _speed = 3.5f;
-
-    void Start()
-    {
-        transform.position = new Vector3(0, 8, 0);
-    }
+    private float _speed = 4f;
 
 
     void Update()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
-        if (transform.position.y >= -3.8f)
+        if (transform.position.y <= -5f)
         {
+            transform.position = new Vector3(Random.Range(-8.0f, 8.0f), 7f, 0);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            Player player = other.transform.GetComponent<Player>();
+            if (player != null)
+            {
+                player.Damage();
+            }
             Destroy(this.gameObject);
         }
 
+        if (other.tag == "Bullet")
+        {
+            Destroy(other.gameObject);
+            Destroy(this.gameObject);
+        }
     }
 }

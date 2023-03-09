@@ -21,13 +21,31 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(SpawnRoutine());
     }
 
+    //IEnumerator SpawnRoutine()
+    //{
+    //    while (!_stopSpawning)
+    //    {
+    //        Vector3 posToSpawn = new Vector3(Random.Range(-8f,8f), 7, 0);
+    //        GameObject newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity, _enemyContainerTransform);
+    //        yield return new WaitForSeconds(SpawnTime);
+    //    }
+    //}
     IEnumerator SpawnRoutine()
     {
         while (!_stopSpawning)
         {
-            Vector3 posToSpawn = new Vector3(Random.Range(-8f,8f), 7, 0);
+            if (_enemyPrefab == null)
+            {
+                Debug.LogError("Enemy prefab is not assigned!");
+                yield break;
+            }
+
+            while (!_stopSpawning)
+            { 
+            Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
             GameObject newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity, _enemyContainerTransform);
             yield return new WaitForSeconds(SpawnTime);
+            }
         }
     }
 

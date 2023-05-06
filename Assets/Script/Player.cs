@@ -26,6 +26,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     private bool _isTripleShotActive = false;
 
+    [SerializeField]
+    private bool _isSpeedActive = false;
+
 
     void Start()
     {
@@ -78,6 +81,14 @@ public class Player : MonoBehaviour
         
     }
 
+    void Speed()
+    {
+        if(_isSpeedActive == true)
+        {
+            _speed = 15f;
+        }
+    }
+
     void FireLaser ()
     {
         _canFire = Time.time + _fireRate;
@@ -114,5 +125,17 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(6.8f);
         _isTripleShotActive = false;
+    }
+
+    public void SpeedActive()
+    {
+        _isSpeedActive = true;
+        StartCoroutine(SpeedPowerDownRoutine());
+    }
+
+    IEnumerator SpeedPowerDownRoutine()
+    {
+        yield return new WaitForSeconds(6.8f);
+        _isSpeedActive = false;
     }
 }

@@ -9,6 +9,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject _tripleShotPrefab;
     [SerializeField]
+    private GameObject _speedPrefab;
+    [SerializeField]
     private GameObject _container;
     [SerializeField]
     private bool _stopSpawning = false;
@@ -22,7 +24,8 @@ public class SpawnManager : MonoBehaviour
 
         _containerTransform = _container.transform;
         StartCoroutine(SpawnRoutine());
-        StartCoroutine(PowerUpRoutine());
+        StartCoroutine(TripleRoutine());
+        StartCoroutine(SpeedRoutine());
     }
 
     //IEnumerator SpawnRoutine()
@@ -54,7 +57,7 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    IEnumerator PowerUpRoutine()
+    IEnumerator TripleRoutine()
     {
         while (!_stopSpawning)
         {
@@ -68,6 +71,25 @@ public class SpawnManager : MonoBehaviour
             {
                 Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
                 GameObject newPower = Instantiate(_tripleShotPrefab, posToSpawn, Quaternion.identity, _containerTransform);
+                yield return new WaitForSeconds(Random.Range(30f, 50f));
+            }
+        }
+    }
+
+    IEnumerator SpeedRoutine()
+    {
+        while (!_stopSpawning)
+        {
+            if (_speedPrefab == null)
+            {
+                Debug.LogError("Power prefab is not assigned!");
+                yield break;
+            }
+
+            while (!_stopSpawning)
+            {
+                Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
+                GameObject newPower = Instantiate(_speedPrefab, posToSpawn, Quaternion.identity, _containerTransform);
                 yield return new WaitForSeconds(Random.Range(10f, 30f));
             }
         }

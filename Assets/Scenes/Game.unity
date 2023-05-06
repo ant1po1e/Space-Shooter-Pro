@@ -163,6 +163,7 @@ MonoBehaviour:
   _lives: 3
   gameOverPanel: {fileID: 1784700274}
   _isTripleShotActive: 0
+  _isSpeedActive: 0
 --- !u!212 &146891563
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -402,7 +403,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyPrefab: {fileID: 5755309282299797667, guid: dadaa95b0909f944c98cc9b76bfb2d73,
     type: 3}
-  _tripleShotPrefab: {fileID: 4392696973955019113, guid: fe8ddcb8859b0e54c8920c21a2ebffee,
+  _tripleShotPrefab: {fileID: 6215383058362855420, guid: fe8ddcb8859b0e54c8920c21a2ebffee,
+    type: 3}
+  _speedPrefab: {fileID: 6645013134362924995, guid: d18156650b905b34e8a04a7d2fa28b75,
     type: 3}
   _container: {fileID: 1199585172}
   _stopSpawning: 0
@@ -722,8 +725,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1488950798}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.531, y: 1.629, z: 0}
-  m_LocalScale: {x: 1.4331086, y: 1.4616947, z: 1}
+  m_LocalPosition: {x: 0.45, y: 1.629, z: 0}
+  m_LocalScale: {x: 1.430309, y: 1.4318334, z: 1}
   m_Children: []
   m_Father: {fileID: 1024573271}
   m_RootOrder: 0

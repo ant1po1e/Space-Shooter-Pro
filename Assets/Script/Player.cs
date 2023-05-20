@@ -29,9 +29,19 @@ public class Player : MonoBehaviour
     [SerializeField]
     private bool _isSpeedActive = false;
 
+    [SerializeField]
+    private bool _isShieldActive = false;
+    [SerializeField]
+    private Transform _shieldSpawnPosition;
+    [SerializeField]
+    private GameObject _shieldObject;
+
+
+
 
     void Start()
     {
+        _shieldObject.SetActive(false);
         gameOverPanel.SetActive(false);
         transform.position = new Vector3(0, 0, 0);
 
@@ -42,12 +52,12 @@ public class Player : MonoBehaviour
     void Update()
     {
         Movement();
+        Speed();
 
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
             FireLaser();
         }
-
     }
 
     void Movement()
@@ -83,9 +93,13 @@ public class Player : MonoBehaviour
 
     void Speed()
     {
-        if(_isSpeedActive == true)
+        if (_isSpeedActive == true)
         {
-            _speed = 15f;
+            _speed = 7f;
+        }
+        else
+        {
+            _speed = 3.5f;
         }
     }
 
@@ -105,15 +119,23 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
-        _lives--;
-
-        if (_lives < 1)
+        if (_isShieldActive == true)
         {
-            gameOverPanel.SetActive(true);
-            _spawnManager.OnPlayerDeath();
-            Destroy(this.gameObject);
+
+        }
+        else if (_isShieldActive == false)
+        {
+            _lives--;
+
+            if (_lives < 1)
+            {
+                gameOverPanel.SetActive(true);
+                _spawnManager.OnPlayerDeath();
+                Destroy(this.gameObject);
+            }
         }
     }
+        
 
     public void TripleShotActive()
     {
@@ -123,7 +145,7 @@ public class Player : MonoBehaviour
     
     IEnumerator TripleShotPowerDownRoutine()
     {
-        yield return new WaitForSeconds(6.8f);
+        yield return new WaitForSeconds(5f);
         _isTripleShotActive = false;
     }
 
@@ -135,7 +157,21 @@ public class Player : MonoBehaviour
 
     IEnumerator SpeedPowerDownRoutine()
     {
-        yield return new WaitForSeconds(6.8f);
+        yield return new WaitForSeconds(5f);
         _isSpeedActive = false;
+    }
+
+    public void ShieldActive()
+    {
+        _isShieldActive = true;
+        _shieldObject.SetActive(true);
+        StartCoroutine(ShieldPowerDownRoutine());
+    }
+
+    IEnumerator ShieldPowerDownRoutine()
+    {
+        yield return new WaitForSeconds(5f);
+        _isShieldActive = false;
+        _shieldObject.SetActive(false);
     }
 }

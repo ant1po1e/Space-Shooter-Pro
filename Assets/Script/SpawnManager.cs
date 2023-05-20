@@ -11,6 +11,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject _speedPrefab;
     [SerializeField]
+    private GameObject _shieldPrefab;
+    [SerializeField]
     private GameObject _container;
     [SerializeField]
     private bool _stopSpawning = false;
@@ -26,17 +28,8 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(SpawnRoutine());
         StartCoroutine(TripleRoutine());
         StartCoroutine(SpeedRoutine());
+        StartCoroutine(ShieldRoutine());
     }
-
-    //IEnumerator SpawnRoutine()
-    //{
-    //    while (!_stopSpawning)
-    //    {
-    //        Vector3 posToSpawn = new Vector3(Random.Range(-8f,8f), 7, 0);
-    //        GameObject newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity, _enemyContainerTransform);
-    //        yield return new WaitForSeconds(SpawnTime);
-    //    }
-    //}
 
     IEnumerator SpawnRoutine()
     {
@@ -90,6 +83,25 @@ public class SpawnManager : MonoBehaviour
             {
                 Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
                 GameObject newPower = Instantiate(_speedPrefab, posToSpawn, Quaternion.identity, _containerTransform);
+                yield return new WaitForSeconds(Random.Range(10f, 30f));
+            }
+        }
+    }
+
+    IEnumerator ShieldRoutine()
+    {
+        while (!_stopSpawning)
+        {
+            if (_shieldPrefab == null)
+            {
+                Debug.LogError("Shield prefab is not assigned!");
+                yield break;
+            }
+
+            while (!_stopSpawning)
+            {
+                Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
+                GameObject newPower = Instantiate(_shieldPrefab, posToSpawn, Quaternion.identity, _containerTransform);
                 yield return new WaitForSeconds(Random.Range(10f, 30f));
             }
         }

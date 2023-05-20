@@ -5,7 +5,7 @@ using UnityEngine;
 public class PowerUp : MonoBehaviour
 {
     [SerializeField]
-    private float _speed = 1.5f;
+    private float _speed = 2f;
 
     [SerializeField]
     private int powerupID;
@@ -37,7 +37,7 @@ public class PowerUp : MonoBehaviour
             }
             else if (powerupID == 2)
             {
-                Debug.Log("e 2");
+                player.ShieldActive();
             }
 
             Destroy(this.gameObject);
